@@ -6,13 +6,29 @@ spring:
       enabled: true
       additional-paths: [ src/main/java ]
       exclude: [ src/main/resources/static ]
+  sql:
+    init:
+      mode: always
+      schema: classpath:schema.sql
+      data: classpath:data.sql
   
   # 数据库配置
   datasource:
-    url: jdbc:mysql://localhost:3306/body_diary?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/body_diary?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true
     username: root
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+# MyBatis-Plus 配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 打印 SQL 日志
+    map-underscore-to-camel-case: true  # 下划线转驼峰
+  global-config:
+    db-config:
+      id-type: auto  # 主键自增
+
 server:
   port: 8088
+  servlet:
+    context-path: /api
